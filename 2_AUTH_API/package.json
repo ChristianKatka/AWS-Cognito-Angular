@@ -1,0 +1,50 @@
+{
+  "name": "auth-api-lambda",
+  "version": "0.0.1",
+  "config": {
+    "region": "eu-west-1",
+    "s3APIlambdaBucket": "auth-api-lambda-bucket",
+    "cloudFormationStackName": "auth-api-lambda"
+  },
+  "scripts": {
+    "start": "nodemon ./server/dev.ts",
+    "prebuild": "rm -rf build && rm -rf dist && mkdir build && mkdir dist",
+    "build": "tsc -p tsconfig.json && cp package.json build && cd build && npm install --production",
+    "delete-objects-in-s3": "aws s3 rm s3://$npm_package_config_s3APIlambdaBucket --recursive",
+    "package": "aws cloudformation package --template-file sam/template.yaml --s3-bucket $npm_package_config_s3APIlambdaBucket --output-template dist/template-out.yaml --region $npm_package_config_region",
+    "deploy": "aws cloudformation deploy --template-file dist/template-out.yaml --stack-name $npm_package_config_cloudFormationStackName --capabilities CAPABILITY_NAMED_IAM --region $npm_package_config_region",
+    "package-deploy": "npm run package && npm run deploy",
+    "build-package-deploy": "npm run build && npm run delete-objects-in-s3 && npm run package && npm run deploy"
+  },
+  "private": true,
+  "dependencies": {
+    "@aws-sdk/client-cognito-identity": "^3.405.0",
+    "@aws-sdk/client-cognito-identity-provider": "^3.405.0",
+    "@aws-sdk/client-dynamodb": "^3.405.0",
+    "@koa/cors": "^4.0.0",
+    "@types/jws": "^3.2.5",
+    "@types/uuid": "^9.0.3",
+    "aws-serverless-express": "^3.4.0",
+    "jws": "^4.0.0",
+    "koa": "^2.14.2",
+    "koa-bodyparser": "^4.4.1",
+    "koa-json": "^2.0.2",
+    "koa-logger": "^3.2.1",
+    "koa-router": "^12.0.0",
+    "nodemon": "^3.0.1",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/aws-serverless-express": "^3.3.5",
+    "@types/koa": "^2.13.8",
+    "@types/koa__cors": "^4.0.0",
+    "@types/koa-bodyparser": "^4.3.10",
+    "@types/koa-json": "^2.0.20",
+    "@types/koa-logger": "^3.1.2",
+    "@types/koa-router": "^7.4.4",
+    "@types/node": "^20.5.9",
+    "dotenv": "^16.3.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
+  }
+}

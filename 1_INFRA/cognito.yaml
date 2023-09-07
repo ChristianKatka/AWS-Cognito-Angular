@@ -1,0 +1,44 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Amazon Cognito User Pool CloudFormation Template
+
+Resources:
+  MyUserPool:
+    Type: AWS::Cognito::UserPool
+    Properties:
+      UserPoolName: MyUserPool
+      AdminCreateUserConfig:
+        AllowAdminCreateUserOnly: false
+      UsernameAttributes:
+        - email
+      Policies:
+        PasswordPolicy:
+          MinimumLength: 6
+          RequireUppercase: false
+          RequireLowercase: false
+          RequireNumbers: false
+          RequireSymbols: false
+      MfaConfiguration: "OFF"
+      Schema:
+        - Name: email
+          AttributeDataType: String
+          Required: true
+      UsernameConfiguration:
+        CaseSensitive: false
+      UserPoolAddOns:
+        AdvancedSecurityMode: "OFF"
+      UserPoolTags:
+        Name: MyUserPoolTag
+
+  MyAppClient:
+    Type: AWS::Cognito::UserPoolClient
+    Properties:
+      ClientName: MyAppClient
+      UserPoolId: !Ref MyUserPool
+      ExplicitAuthFlows:
+        - ALLOW_REFRESH_TOKEN_AUTH
+        - ALLOW_ADMIN_USER_PASSWORD_AUTH
+
+Outputs:
+  UserPoolId:
+    Description: The ID of the newly created Cognito User Pool
+    Value: !Ref MyUserPool

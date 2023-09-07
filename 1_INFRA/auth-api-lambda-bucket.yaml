@@ -1,0 +1,70 @@
+Description: CloudFormation template for creating an S3 bucket for an authentication API Lambda function
+
+Resources:
+  # S3 Bucket for the authentication API Lambda
+  AuthApiLambdaBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      AccessControl: Private
+      BucketName: auth-api-lambda-bucket
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      CorsConfiguration:
+        CorsRules:
+          - AllowedHeaders:
+              - "*"
+            AllowedMethods:
+              - GET
+              - HEAD
+              - POST
+              - PUT
+              - DELETE
+            AllowedOrigins:
+              - "*"
+            MaxAge: 300
+      Tags:
+        - Key: Name
+          Value: auth-api-lambda-bucket
+
+Outputs:
+  # Output the domain name of the authentication API Lambda bucket
+  AuthApiLambdaBucketDomainName:
+    Description: Domain name for the authentication API Lambda bucket
+    Value: !GetAtt AuthApiLambdaBucket.DomainName
+    Export:
+      Name: auth-api-lambda-bucket-domain-name
+
+
+
+Resources:
+  # S3 Bucket for the authentication API Lambda
+  AuthApiLambdaBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      AccessControl: Private
+      BucketName: auth-api-lambda-bucket
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      CorsConfiguration:
+        CorsRules:
+          - AllowedHeaders:
+              - "*"
+            AllowedMethods:
+              - GET
+              - HEAD
+              - POST
+              - PUT
+              - DELETE
+            AllowedOrigins:
+              - "*"
+            MaxAge: 300
+      Tags: # Add tags for better resource management
+        - Key: Name
+          Value: auth-api-lambda-bucket
+

@@ -1,0 +1,87 @@
+Transform: AWS::Serverless-2016-10-31
+Description: API powered by API Gateway and Lambda using Koa
+Resources:
+  ApiGatewayHttpApi:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      CorsConfiguration:
+        AllowOrigins:
+        - '*'
+        AllowHeaders:
+        - '*'
+        AllowMethods:
+        - GET
+        - POST
+        MaxAge: 60
+      DefaultRouteSettings:
+        ThrottlingBurstLimit: 10
+        ThrottlingRateLimit: 10
+  LambdaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          Effect: Allow
+          Principal:
+            Service: lambda.amazonaws.com
+          Action: sts:AssumeRole
+  AllowLambdaCloudWatchLogs:
+    Type: AWS::IAM::Policy
+    DependsOn:
+    - LambdaExecutionRole
+    Properties:
+      PolicyName: AllowLambdaDynamoDB
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Action:
+          - logs:CreateLogGroup
+          - logs:CreateLogStream
+          - logs:PutLogEvents
+          Resource:
+          - arn:aws:logs:*:*:*
+      Roles:
+      - Ref: LambdaExecutionRole
+  AllowLambdaCognito:
+    Type: AWS::IAM::Policy
+    DependsOn:
+    - LambdaExecutionRole
+    Properties:
+      PolicyName: AllowLambdaCognito
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Action:
+          - cognito-idp:*
+          Resource:
+          - '*'
+      Roles:
+      - Ref: LambdaExecutionRole
+  API:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://auth-api-lambda-bucket/3279d19d31390187e9e8dbe090403399
+      Handler: index.handler
+      MemorySize: 256
+      Role:
+        Fn::GetAtt:
+        - LambdaExecutionRole
+        - Arn
+      Runtime: nodejs18.x
+      Timeout: 30
+      Events:
+        ApiEvent:
+          Type: HttpApi
+          Properties:
+            ApiId:
+              Ref: ApiGatewayHttpApi
+            Path: $default
+            PayloadFormatVersion: '1.0'
+            Method: ANY
+      Environment:
+        Variables:
+          COGNITO_USER_POOL_ID: eu-west-1_mQfA4QbO4
+          COGNITO_CLIENT_ID: 650f71os93qu7gh8toiu95kmcf
