@@ -15,8 +15,8 @@ Resources:
           - POST
         MaxAge: 60
       DefaultRouteSettings:
-        ThrottlingBurstLimit: 10
-        ThrottlingRateLimit: 10
+        ThrottlingBurstLimit: 2
+        ThrottlingRateLimit: 2
 
   LambdaExecutionRole:
     Type: AWS::IAM::Role

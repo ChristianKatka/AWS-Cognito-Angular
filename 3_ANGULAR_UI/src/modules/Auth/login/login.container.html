@@ -1,0 +1,16 @@
+<app-wrapper
+  [width]="'70%'"
+  *ngIf="authUiControlData$ | async as authUiControlData"
+>
+  <section class="flex-row align-center-center">
+    <object data="assets/login2.svg" type="image/svg+xml"></object>
+  </section>
+
+  <h1 style="margin-top: 4rem; text-align: center">Login</h1>
+
+  <app-login-form
+    [isLoading]="authUiControlData.isLoading"
+    [errorMessage]="authUiControlData.errorMessage"
+    (login)="login($event)"
+  ></app-login-form>
+</app-wrapper>

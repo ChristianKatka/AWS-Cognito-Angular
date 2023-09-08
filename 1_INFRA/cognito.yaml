@@ -34,6 +34,7 @@ Resources:
     Properties:
       ClientName: MyAppClient
       UserPoolId: !Ref MyUserPool
+      RefreshTokenValidity: 60 # refresh token is valid for 2 months
       ExplicitAuthFlows:
         - ALLOW_REFRESH_TOKEN_AUTH
         - ALLOW_ADMIN_USER_PASSWORD_AUTH

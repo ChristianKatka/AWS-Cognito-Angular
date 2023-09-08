@@ -1,1 +1,53 @@
 /* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+@mixin disable-auto-zoom-on-iphone-input-fields {
+  /*
+   * disable auto-zoom on iphone input field focus
+   * http://www.456bereastreet.com/archive/201212/ios_webkit_browsers_and_auto-zooming_form_controls/
+  */
+  input[type="text"]:focus,
+  input[type="number"]:focus,
+  textarea:focus {
+    font-size: 16px;
+  }
+
+  /* disable auto-zoom on iphone input field focus */
+  @media screen and (-webkit-min-device-pixel-ratio: 0) {
+    select:focus,
+    textarea:focus,
+    input:focus {
+      font-size: 16px;
+    }
+  }
+}
+
+.flex-row {
+  flex-direction: row;
+  box-sizing: border-box;
+  display: flex;
+}
+
+.flex-column {
+  flex-direction: column;
+  box-sizing: border-box;
+  display: flex;
+}
+
+.align-center-center {
+  place-content: center;
+  align-items: center;
+}
+
+.align-space-between-center {
+  place-content: center space-between;
+  align-items: center;
+}

@@ -14,8 +14,8 @@ Resources:
         - POST
         MaxAge: 60
       DefaultRouteSettings:
-        ThrottlingBurstLimit: 10
-        ThrottlingRateLimit: 10
+        ThrottlingBurstLimit: 2
+        ThrottlingRateLimit: 2
   LambdaExecutionRole:
     Type: AWS::IAM::Role
     Properties:
@@ -63,7 +63,7 @@ Resources:
   API:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: s3://auth-api-lambda-bucket/3279d19d31390187e9e8dbe090403399
+      CodeUri: s3://auth-api-lambda-bucket/e9e4ecf5fd990230e28e10d2cdaf24d3
       Handler: index.handler
       MemorySize: 256
       Role:
