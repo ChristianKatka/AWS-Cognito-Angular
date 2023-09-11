@@ -2,7 +2,7 @@
 set -e 
 
 REGION="eu-west-1"
-TEMPLATE_FILE="./auth-api-lambda-bucket.yaml"
+TEMPLATE_FILE="./api-lambda-bucket.yaml"
 STACK_NAME="krisu-auth-app---auth-api-lambda-bucket"
 
 aws cloudformation deploy \

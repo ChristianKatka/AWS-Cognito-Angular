@@ -2,12 +2,10 @@ AWSTemplateFormatVersion: "2010-09-09"
 Description: Amazon Cognito User Pool CloudFormation Template
 
 Resources:
-  MyUserPool:
+  UserPool:
     Type: AWS::Cognito::UserPool
     Properties:
-      UserPoolName: MyUserPool
-      AdminCreateUserConfig:
-        AllowAdminCreateUserOnly: false
+      UserPoolName: krisu-auth-app---user-pool
       UsernameAttributes:
         - email
       Policies:
@@ -26,14 +24,12 @@ Resources:
         CaseSensitive: false
       UserPoolAddOns:
         AdvancedSecurityMode: "OFF"
-      UserPoolTags:
-        Name: MyUserPoolTag
 
   MyAppClient:
     Type: AWS::Cognito::UserPoolClient
     Properties:
       ClientName: MyAppClient
-      UserPoolId: !Ref MyUserPool
+      UserPoolId: !Ref UserPool
       RefreshTokenValidity: 60 # refresh token is valid for 2 months
       ExplicitAuthFlows:
         - ALLOW_REFRESH_TOKEN_AUTH
@@ -41,5 +37,13 @@ Resources:
 
 Outputs:
   UserPoolId:
-    Description: The ID of the newly created Cognito User Pool
-    Value: !Ref MyUserPool
+    Description: krisu auth app Cognito User Pool id
+    Value: !Ref UserPool
+    Export:
+      Name: krisu-auth-app---user-pool-id
+
+  UserPoolProviderURL:
+    Description: krisu auth app Cognito User Pool provider url
+    Value: !GetAtt UserPool.ProviderURL
+    Export:
+      Name: krisu-auth-app---user-pool-provider-url

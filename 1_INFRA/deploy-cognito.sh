@@ -3,7 +3,7 @@ set -e
 
 REGION="eu-west-1"
 TEMPLATE_FILE="./cognito.yaml"
-STACK_NAME="my-little-user-pool"
+STACK_NAME="krisu-auth-app---user-pool"
 
 aws cloudformation deploy \
   --stack-name "$STACK_NAME"  \

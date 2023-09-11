@@ -1,0 +1,16 @@
+<app-wrapper
+  [width]="'70%'"
+  *ngIf="authUiControlData$ | async as authUiControlData"
+>
+  <section class="flex-row align-center-center">
+    <object data="assets/login.svg" type="image/svg+xml"></object>
+  </section>
+
+  <h1 style="margin-top: 4rem; text-align: center">Register</h1>
+
+  <app-register-form
+    [isLoading]="authUiControlData.isLoading"
+    [errorMessage]="authUiControlData.errorMessage"
+    (register)="register($event)"
+  ></app-register-form>
+</app-wrapper>

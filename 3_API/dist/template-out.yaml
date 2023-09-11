@@ -1,6 +1,26 @@
 Transform: AWS::Serverless-2016-10-31
 Description: API powered by API Gateway and Lambda using Koa
 Resources:
+  CognitoUserPoolClient:
+    Type: AWS::Cognito::UserPoolClient
+    Properties:
+      UserPoolId:
+        Fn::ImportValue: krisu-auth-app---user-pool-id
+      ClientName: krisu-auth-app---user-pool-client
+  CognitoUserPoolAuthorizer:
+    Type: AWS::ApiGatewayV2::Authorizer
+    Properties:
+      Name: CognitoAuthorizer
+      ApiId:
+        Ref: ApiGatewayHttpApi
+      AuthorizerType: JWT
+      IdentitySource:
+      - $request.header.Authorization
+      JwtConfiguration:
+        Audience:
+        - Ref: CognitoUserPoolClient
+        Issuer:
+          Fn::ImportValue: krisu-auth-app---user-pool-provider-url
   ApiGatewayHttpApi:
     Type: AWS::Serverless::HttpApi
     Properties:
@@ -16,6 +36,8 @@ Resources:
       DefaultRouteSettings:
         ThrottlingBurstLimit: 2
         ThrottlingRateLimit: 2
+      Auth:
+        Ref: CognitoUserPoolAuthorizer
   LambdaExecutionRole:
     Type: AWS::IAM::Role
     Properties:
@@ -63,7 +85,7 @@ Resources:
   API:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: s3://krisu-auth-app---auth-api-lambda-bucket/4298c69f0d99ad773de1116e9d2df70c
+      CodeUri: s3://krisu-auth-app---api-lambda-bucket/4f473ef1b1b7d1caf983710e6b3c7c29
       Handler: index.handler
       MemorySize: 256
       Role:
@@ -81,7 +103,3 @@ Resources:
             Path: $default
             PayloadFormatVersion: '1.0'
             Method: ANY
-      Environment:
-        Variables:
-          COGNITO_USER_POOL_ID: eu-west-1_YU56VHLTM
-          COGNITO_CLIENT_ID: 24onpd4if6j6o2ofvejiuoqao4

@@ -1,0 +1,61 @@
+<app-alert *ngIf="errorMessage" [text]="errorMessage"></app-alert>
+<div *ngIf="!errorMessage" style="height: 63px"></div>
+
+<form class="flex-column align-center-center" [formGroup]="registerForm">
+  <mat-form-field appearance="outline">
+    <mat-error *ngIf="registerForm.get('email')?.hasError('required')"
+      >Email is required</mat-error
+    >
+    <mat-error *ngIf="registerForm.get('email')?.hasError('email')">
+      Input real email address
+    </mat-error>
+    <mat-label>Email</mat-label>
+    <input
+      matInput
+      maxlength="40"
+      type="email"
+      autocomplete="email"
+      formControlName="email"
+    />
+    <mat-icon class="material-icons-outlined" matPrefix>mail</mat-icon>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-error *ngIf="registerForm.get('password')?.hasError('required')"
+      >Password is required</mat-error
+    >
+    <mat-label>Password</mat-label>
+    <input
+      matInput
+      maxlength="40"
+      [type]="showPassword ? 'text' : 'password'"
+      formControlName="password"
+    />
+    <mat-icon class="material-icons-outlined" matPrefix>lock</mat-icon>
+    <mat-icon
+      matSuffix
+      (click)="showPassword = !showPassword"
+      class="toggleShowPasswordButton material-icons-outlined"
+      >{{ showPassword ? "visibility" : "visibility_off" }}</mat-icon
+    >
+  </mat-form-field>
+
+  <button
+    mat-raised-button
+    mat-button
+    color="primary"
+    (click)="submit()"
+    [disabled]="this.registerForm.invalid"
+    *ngIf="!isLoading"
+  >
+    Register
+  </button>
+
+  <button *ngIf="isLoading" mat-raised-button color="primary" disabled>
+    <app-loading-spinner [diameter]="30"></app-loading-spinner>
+  </button>
+
+  <span
+    >Already registered? <b color="primary" routerLink="/login">Login</b></span
+  >
+</form>
