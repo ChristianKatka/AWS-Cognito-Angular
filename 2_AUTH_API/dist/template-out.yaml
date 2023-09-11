@@ -63,7 +63,7 @@ Resources:
   API:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: s3://krisu-auth-app---auth-api-lambda-bucket/4298c69f0d99ad773de1116e9d2df70c
+      CodeUri: s3://krisu-auth-app---auth-api-lambda-bucket/0d8ef03c91c5d97e335f40883e5b24a6
       Handler: index.handler
       MemorySize: 256
       Role:
@@ -83,5 +83,5 @@ Resources:
             Method: ANY
       Environment:
         Variables:
-          COGNITO_USER_POOL_ID: eu-west-1_YU56VHLTM
-          COGNITO_CLIENT_ID: 24onpd4if6j6o2ofvejiuoqao4
+          COGNITO_USER_POOL_ID: eu-west-1_frOcvpAOE
+          COGNITO_CLIENT_ID: 7fu4th73qti0sgbe4bra9r7ou0

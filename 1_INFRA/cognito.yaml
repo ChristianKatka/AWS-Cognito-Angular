@@ -28,7 +28,7 @@ Resources:
   MyAppClient:
     Type: AWS::Cognito::UserPoolClient
     Properties:
-      ClientName: MyAppClient
+      ClientName: krisu-auth-app---user-pool-client
       UserPoolId: !Ref UserPool
       RefreshTokenValidity: 60 # refresh token is valid for 2 months
       ExplicitAuthFlows:

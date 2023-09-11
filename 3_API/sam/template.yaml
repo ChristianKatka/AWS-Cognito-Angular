@@ -2,25 +2,6 @@ Transform: AWS::Serverless-2016-10-31
 Description: API powered by API Gateway and Lambda using Koa
 
 Resources:
-  CognitoUserPoolClient:
-    Type: AWS::Cognito::UserPoolClient
-    Properties:
-      UserPoolId: !ImportValue krisu-auth-app---user-pool-id
-      ClientName: krisu-auth-app---user-pool-client
-
-  CognitoUserPoolAuthorizer:
-    Type: AWS::ApiGatewayV2::Authorizer
-    Properties:
-      Name: CognitoAuthorizer
-      ApiId: !Ref ApiGatewayHttpApi
-      AuthorizerType: JWT
-      IdentitySource:
-        - "$request.header.Authorization"
-      JwtConfiguration:
-        Audience:
-          - !Ref CognitoUserPoolClient
-        Issuer: !ImportValue krisu-auth-app---user-pool-provider-url
-
   ApiGatewayHttpApi:
     Type: AWS::Serverless::HttpApi
     Properties:
@@ -36,7 +17,27 @@ Resources:
       DefaultRouteSettings:
         ThrottlingBurstLimit: 2
         ThrottlingRateLimit: 2
-      Auth: !Ref CognitoUserPoolAuthorizer
+      Auth:
+        Authorizers:
+          OAuth2Authorizer:
+            JwtConfiguration:
+              issuer: "https://cognito-idp.eu-west-1.amazonaws.com/eu-west-1_frOcvpAOE"
+              audience:
+                - 7fu4th73qti0sgbe4bra9r7ou0
+            IdentitySource: "$request.header.Authorization"
+
+  CognitoUserPoolAuthorizer:
+    Type: AWS::ApiGatewayV2::Authorizer
+    Properties:
+      Name: CognitoAuthorizer
+      ApiId: !Ref ApiGatewayHttpApi
+      AuthorizerType: JWT
+      IdentitySource:
+        - "$request.header.Authorization"
+      JwtConfiguration:
+        Audience:
+          - !ImportValue krisu-auth-app---user-pool-id
+        Issuer: !ImportValue krisu-auth-app---user-pool-provider-url
 
   LambdaExecutionRole:
     Type: AWS::IAM::Role

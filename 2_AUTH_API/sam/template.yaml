@@ -84,5 +84,5 @@ Resources:
             Method: ANY
       Environment:
         Variables:
-          COGNITO_USER_POOL_ID: "eu-west-1_YU56VHLTM"
-          COGNITO_CLIENT_ID: "24onpd4if6j6o2ofvejiuoqao4"
+          COGNITO_USER_POOL_ID: "eu-west-1_frOcvpAOE"
+          COGNITO_CLIENT_ID: "7fu4th73qti0sgbe4bra9r7ou0"
