@@ -25,7 +25,7 @@ Resources:
       UserPoolAddOns:
         AdvancedSecurityMode: "OFF"
 
-  MyAppClient:
+  UserPoolClient:
     Type: AWS::Cognito::UserPoolClient
     Properties:
       ClientName: krisu-auth-app---user-pool-client
@@ -41,6 +41,12 @@ Outputs:
     Value: !Ref UserPool
     Export:
       Name: krisu-auth-app---user-pool-id
+
+  UserPoolClientId:
+    Description: krisu auth app Cognito User Pool Client ID
+    Value: !Ref UserPoolClient
+    Export:
+      Name: krisu-auth-app---user-pool-client-id
 
   UserPoolProviderURL:
     Description: krisu auth app Cognito User Pool provider url

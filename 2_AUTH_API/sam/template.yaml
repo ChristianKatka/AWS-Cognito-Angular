@@ -84,5 +84,5 @@ Resources:
             Method: ANY
       Environment:
         Variables:
-          COGNITO_USER_POOL_ID: "eu-west-1_frOcvpAOE"
-          COGNITO_CLIENT_ID: "7fu4th73qti0sgbe4bra9r7ou0"
+          COGNITO_USER_POOL_ID: !ImportValue krisu-auth-app---user-pool-id
+          COGNITO_CLIENT_ID: !ImportValue krisu-auth-app---user-pool-client-id
