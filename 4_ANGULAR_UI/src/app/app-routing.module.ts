@@ -4,6 +4,7 @@ import { LoginContainerComponent } from '@auth/components/login/login.container'
 import { RegisterContainerComponent } from '@auth/components/register/register.container';
 import { AuthenticatedGuard } from '@auth/guards/authenticated.guard';
 import { UnauthenticatedGuard } from '@auth/guards/unauthenticated.guard';
+import { NoteContainerComponent } from '@home/components/create-note/notes/note.container';
 import { HomeFeatureContainerComponent } from '@home/home-feature.container';
 
 const routes: Routes = [
@@ -17,6 +18,12 @@ const routes: Routes = [
     canActivate: [AuthenticatedGuard],
     component: HomeFeatureContainerComponent,
   },
+  {
+    path: 'create-note',
+    canActivate: [AuthenticatedGuard],
+    component: NoteContainerComponent,
+  },
+
   {
     path: 'login',
     canActivate: [UnauthenticatedGuard],

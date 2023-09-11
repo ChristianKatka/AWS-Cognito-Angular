@@ -5,6 +5,8 @@
 
   <section class="flex-column align-center-center">
     <h3>Welcome logged in user. Happy times using the application</h3>
-    <button mat-raised-button (click)="logout()">logout</button>
+    <button mat-raised-button routerLink="/create-note">Create note</button>
   </section>
 </app-wrapper>
+
+<app-notes-container></app-notes-container>

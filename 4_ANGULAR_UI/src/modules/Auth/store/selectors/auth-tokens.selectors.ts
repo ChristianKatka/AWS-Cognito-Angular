@@ -23,3 +23,9 @@ export const getRefreshToken = createSelector(AuthTokensState, (state) => {
 
   return state.tokens.RefreshToken;
 });
+
+export const getIdToken = createSelector(AuthTokensState, (state) => {
+  if (!state.tokens) return undefined;
+
+  return state.tokens.IdToken;
+});
