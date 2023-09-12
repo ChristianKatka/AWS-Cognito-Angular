@@ -1,0 +1,16 @@
+---
+AWSTemplateFormatVersion: "2010-09-09"
+Description: DynamoDB table for notes
+
+Resources:
+  ClapAppUsersTable:
+    Type: "AWS::DynamoDB::Table"
+    Properties:
+      AttributeDefinitions:
+        - AttributeName: "id"
+          AttributeType: "S"
+      KeySchema:
+        - AttributeName: "id"
+          KeyType: "HASH"
+      BillingMode: PAY_PER_REQUEST
+      TableName: "krisu-auth-app---notes-table"

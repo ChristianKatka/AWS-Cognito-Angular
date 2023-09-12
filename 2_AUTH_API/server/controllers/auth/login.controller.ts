@@ -2,8 +2,6 @@ import { Context, Next } from "koa";
 import { adminInitiateAuthCommandService } from "../../services/auth/admin-initiate-auth-command.service";
 
 export const login = async (ctx: Context, next: Next) => {
-  // const postId = ctx.params.postId;
-  // const userId = ctx.state.jwtPayload.sub;
   const email = (ctx.request.body as any).email;
   const password = (ctx.request.body as any).password;
 

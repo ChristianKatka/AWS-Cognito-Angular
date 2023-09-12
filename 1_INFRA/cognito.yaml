@@ -20,17 +20,13 @@ Resources:
         - Name: email
           AttributeDataType: String
           Required: true
-      UsernameConfiguration:
-        CaseSensitive: false
-      UserPoolAddOns:
-        AdvancedSecurityMode: "OFF"
 
   UserPoolClient:
     Type: AWS::Cognito::UserPoolClient
     Properties:
       ClientName: krisu-auth-app---user-pool-client
       UserPoolId: !Ref UserPool
-      RefreshTokenValidity: 60 # refresh token is valid for 2 months
+      RefreshTokenValidity: 60 # refresh token is valid for 2 months, means you have to login every 2 months
       ExplicitAuthFlows:
         - ALLOW_REFRESH_TOKEN_AUTH
         - ALLOW_ADMIN_USER_PASSWORD_AUTH
@@ -47,9 +43,3 @@ Outputs:
     Value: !Ref UserPoolClient
     Export:
       Name: krisu-auth-app---user-pool-client-id
-
-  UserPoolProviderURL:
-    Description: krisu auth app Cognito User Pool provider url
-    Value: !GetAtt UserPool.ProviderURL
-    Export:
-      Name: krisu-auth-app---user-pool-provider-url

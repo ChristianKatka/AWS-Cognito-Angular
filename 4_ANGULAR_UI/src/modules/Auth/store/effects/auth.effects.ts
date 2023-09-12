@@ -17,22 +17,26 @@ export class AuthEffects {
       withLatestFrom(this.store.select(AuthTokensSelectors.getRefreshToken)),
       switchMap(([action, refreshToken]) => {
         if (!refreshToken) {
-          return of(
-            RouterActions.navigate({
-              commands: ['/login'],
-            })
-          );
+          // When there is no refresh token, user is not authenticated so logout
+          return of(AuthActions.Logout());
         }
         return this.authService.refreshTokens(refreshToken).pipe(
           map((response) => {
             return AuthActions.RefreshTokens.success({ response });
           }),
           catchError((error) => {
-            console.log(error);
             return of(AuthActions.RefreshTokens.error({ error }));
           })
         );
       })
+    )
+  );
+
+  // when there is problem authenticating user with refresh token -> unauthenticate user by logging out
+  updateSessioWithRefreshTokenError$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActions.RefreshTokens.error),
+      map(() => AuthActions.Logout())
     )
   );
 
@@ -59,7 +63,7 @@ export class AuthEffects {
       ofType(AuthActions.Register.success),
       map(() =>
         RouterActions.navigate({
-          commands: ['/home'],
+          commands: ['/welcome'],
         })
       )
     )

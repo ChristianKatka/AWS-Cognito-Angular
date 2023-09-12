@@ -1,5 +1,5 @@
 Transform: AWS::Serverless-2016-10-31
-Description: API powered by API Gateway and Lambda using Koa
+Description: API
 
 Resources:
   ApiGatewayHttpApi:
@@ -13,31 +13,26 @@ Resources:
         AllowMethods:
           - GET
           - POST
+          - PUT
+          - DELETE
+          - PATCH
         MaxAge: 60
       DefaultRouteSettings:
         ThrottlingBurstLimit: 2
         ThrottlingRateLimit: 2
       Auth:
         Authorizers:
-          OAuth2Authorizer:
+          CognitoAuthorizer:
             JwtConfiguration:
-              issuer: "https://cognito-idp.eu-west-1.amazonaws.com/eu-west-1_frOcvpAOE"
+              issuer:
+                Fn::Join:
+                  - ""
+                  - - !Sub https://cognito-idp.${AWS::Region}.amazonaws.com/
+                    - Fn::ImportValue: krisu-auth-app---user-pool-id
               audience:
-                - 7fu4th73qti0sgbe4bra9r7ou0
-            IdentitySource: "$request.header.Authorization"
-
-  CognitoUserPoolAuthorizer:
-    Type: AWS::ApiGatewayV2::Authorizer
-    Properties:
-      Name: CognitoAuthorizer
-      ApiId: !Ref ApiGatewayHttpApi
-      AuthorizerType: JWT
-      IdentitySource:
-        - "$request.header.Authorization"
-      JwtConfiguration:
-        Audience:
-          - !ImportValue krisu-auth-app---user-pool-id
-        Issuer: !ImportValue krisu-auth-app---user-pool-provider-url
+                - Fn::ImportValue: krisu-auth-app---user-pool-client-id
+            IdentitySource: $request.header.Authorization
+        DefaultAuthorizer: CognitoAuthorizer
 
   LambdaExecutionRole:
     Type: AWS::IAM::Role
@@ -69,18 +64,18 @@ Resources:
       Roles:
         - !Ref LambdaExecutionRole
 
-  AllowLambdaCognito:
+  AllowLambdaDynamoDB:
     Type: AWS::IAM::Policy
     DependsOn:
       - LambdaExecutionRole
     Properties:
-      PolicyName: "AllowLambdaCognito"
+      PolicyName: "AllowLambdaDynamoDB"
       PolicyDocument:
         Version: "2012-10-17"
         Statement:
           - Effect: Allow
             Action:
-              - cognito-idp:*
+              - dynamodb:*
             Resource:
               - "*"
       Roles:
@@ -103,3 +98,8 @@ Resources:
             Path: $default
             PayloadFormatVersion: "1.0"
             Method: ANY
+
+Outputs:
+  ApiEndoint:
+    Description: "API endpoint"
+    Value: !Sub "https://${ApiGatewayHttpApi}.execute-api.${AWS::Region}.amazonaws.com"

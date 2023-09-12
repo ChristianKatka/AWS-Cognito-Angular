@@ -8,7 +8,7 @@ export const register = async (ctx: Context, next: Next) => {
   const password = (ctx.request.body as any).password;
 
   try {
-    // signup/register to cognito
+    // signup AKA register to cognito
     const signUpResponse = await signUpCommandService(email, password);
 
     // admin confirm given user. (now no need for user to verify itself via email)

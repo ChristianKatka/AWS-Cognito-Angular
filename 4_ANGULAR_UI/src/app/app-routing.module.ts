@@ -4,24 +4,24 @@ import { LoginContainerComponent } from '@auth/components/login/login.container'
 import { RegisterContainerComponent } from '@auth/components/register/register.container';
 import { AuthenticatedGuard } from '@auth/guards/authenticated.guard';
 import { UnauthenticatedGuard } from '@auth/guards/unauthenticated.guard';
-import { NoteContainerComponent } from '@home/components/create-note/notes/note.container';
-import { HomeFeatureContainerComponent } from '@home/home-feature.container';
+import { WelcomeNewUserComponent } from './welcome-new-user/welcome-new-user.component';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home',
     pathMatch: 'full',
+    redirectTo: '',
   },
   {
-    path: 'home',
+    path: '',
     canActivate: [AuthenticatedGuard],
-    component: HomeFeatureContainerComponent,
+    loadChildren: () =>
+      import('../modules/Home/home.module').then((m) => m.HomeModule),
   },
   {
-    path: 'create-note',
+    path: 'welcome',
     canActivate: [AuthenticatedGuard],
-    component: NoteContainerComponent,
+    component: WelcomeNewUserComponent,
   },
 
   {

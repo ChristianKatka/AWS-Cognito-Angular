@@ -13,9 +13,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { effects, reducers } from './store';
 import { RouterStateSerializer } from './store/router-state.serializer';
+import { WelcomeNewUserComponent } from './welcome-new-user/welcome-new-user.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, WelcomeNewUserComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

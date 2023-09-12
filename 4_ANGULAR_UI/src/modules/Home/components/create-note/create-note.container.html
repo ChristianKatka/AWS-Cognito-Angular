@@ -1,0 +1,12 @@
+<app-wrapper [width]="'90%'">
+  <div [style.margin-top.rem]="1" class="flex-row align-space-between-center">
+    <button mat-icon-button routerLink="/home">
+      <mat-icon>arrow_back_ios</mat-icon>
+    </button>
+    <h2>Create note</h2>
+    <div></div>
+  </div>
+  <app-create-note-form
+    (createNote)="createNote($event)"
+  ></app-create-note-form>
+</app-wrapper>

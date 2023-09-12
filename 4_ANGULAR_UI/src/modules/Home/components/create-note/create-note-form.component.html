@@ -1,0 +1,53 @@
+<section [style.margin-top.rem]="2">
+  <form [formGroup]="createNoteForm">
+    <mat-form-field appearance="fill">
+      <mat-error *ngIf="createNoteForm.get('heading')?.hasError('required')"
+        >To create note you must give heading</mat-error
+      >
+      <mat-label>Heading</mat-label>
+      <input
+        formControlName="heading"
+        matInput
+        maxlength="50"
+        placeholder="Esim. Muista käydä kaupassa"
+      />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-error *ngIf="createNoteForm.get('text')?.hasError('required')"
+        >To create note you must write something</mat-error
+      >
+      <mat-label>Write text to your note</mat-label>
+      <textarea
+        matInput
+        cdkTextareaAutosize
+        #autosize="cdkTextareaAutosize"
+        cdkAutosizeMinRows="8"
+        cdkAutosizeMaxRows="12"
+        maxlength="255"
+        formControlName="text"
+      ></textarea>
+    </mat-form-field>
+  </form>
+</section>
+
+<button
+  *ngIf="!loading"
+  class="create-note-button"
+  [disabled]="this.createNoteForm.invalid"
+  mat-raised-button
+  color="primary"
+  (click)="submit()"
+>
+  CREATE NOTE
+</button>
+
+<button
+  *ngIf="loading"
+  class="create-note-button"
+  mat-raised-button
+  color="primary"
+  disabled
+>
+  <app-loading-spinner [diameter]="40"></app-loading-spinner>
+</button>

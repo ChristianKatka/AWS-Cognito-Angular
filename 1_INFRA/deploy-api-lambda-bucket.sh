@@ -3,7 +3,7 @@ set -e
 
 REGION="eu-west-1"
 TEMPLATE_FILE="./api-lambda-bucket.yaml"
-STACK_NAME="krisu-auth-app---auth-api-lambda-bucket"
+STACK_NAME="krisu-auth-app---api-lambda-bucket"
 
 aws cloudformation deploy \
   --stack-name "$STACK_NAME"  \

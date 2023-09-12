@@ -1,0 +1,15 @@
+@import "../../../../styles.scss";
+@include disable-auto-zoom-on-iphone-input-fields;
+
+form {
+  margin-top: 1rem;
+}
+
+mat-form-field {
+  width: 100%;
+  margin: 15px 0px;
+}
+
+.create-note-button {
+  width: 100%;
+}

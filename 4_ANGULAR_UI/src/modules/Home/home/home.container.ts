@@ -4,7 +4,6 @@ import { AuthActions } from '@auth/store/actions';
 import { Store } from '@ngrx/store';
 
 @Component({
-  selector: 'app-home-container',
   templateUrl: 'home.container.html',
   styleUrls: ['home.container.scss'],
 })

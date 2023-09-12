@@ -18,6 +18,7 @@
   },
   "private": true,
   "dependencies": {
+    "@aws-sdk/lib-dynamodb": "^3.410.0",
     "@koa/cors": "^4.0.0",
     "@types/jws": "^3.2.5",
     "@types/uuid": "^9.0.3",

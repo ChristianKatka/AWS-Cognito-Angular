@@ -1,5 +1,5 @@
 Transform: AWS::Serverless-2016-10-31
-Description: API powered by API Gateway and Lambda using Koa
+Description: API for authentication with cognito
 
 Resources:
   ApiGatewayHttpApi:
@@ -86,3 +86,8 @@ Resources:
         Variables:
           COGNITO_USER_POOL_ID: !ImportValue krisu-auth-app---user-pool-id
           COGNITO_CLIENT_ID: !ImportValue krisu-auth-app---user-pool-client-id
+
+Outputs:
+  AuthApiEndoint:
+    Description: "Auth API endpoint"
+    Value: !Sub "https://${ApiGatewayHttpApi}.execute-api.${AWS::Region}.amazonaws.com"

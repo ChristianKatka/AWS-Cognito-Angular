@@ -28,11 +28,3 @@ Resources:
       Tags:
         - Key: Name
           Value: krisu-auth-app---auth-api-lambda-bucket
-
-Outputs:
-  # Output the domain name of the authentication API Lambda bucket
-  AuthApiLambdaBucketDomainName:
-    Description: Domain name for the authentication API Lambda bucket
-    Value: !GetAtt AuthApiLambdaBucket.DomainName
-    Export:
-      Name: krisu-auth-app---auth-api-lambda-bucket-domain-name
