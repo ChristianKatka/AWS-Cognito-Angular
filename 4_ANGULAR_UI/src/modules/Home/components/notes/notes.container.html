@@ -1,3 +1,10 @@
-<app-wrapper [width]="'90%'">
-  <app-notes></app-notes>
+<app-wrapper
+  [width]="'90%'"
+  *ngIf="notesControlData$ | async as notesControlData"
+>
+  <app-notes
+    [isLoading]="notesControlData.isLoading"
+    [notes]="notesControlData.notes"
+    (deleteNote)="deleteNote($event)"
+  ></app-notes>
 </app-wrapper>

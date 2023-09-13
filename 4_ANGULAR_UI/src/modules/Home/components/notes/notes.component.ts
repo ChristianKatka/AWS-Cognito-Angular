@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Note } from '@shared/models/note.model';
 
 @Component({
   selector: 'app-notes',
@@ -6,5 +7,12 @@ import { Component } from '@angular/core';
   styleUrls: ['notes.component.scss'],
 })
 export class NotesComponent {
-  notes = [1, 2, 3, 4];
+  @Input()
+  notes: Note[] = [];
+
+  @Input()
+  isLoading = false;
+
+  @Output()
+  deleteNote: EventEmitter<string> = new EventEmitter();
 }

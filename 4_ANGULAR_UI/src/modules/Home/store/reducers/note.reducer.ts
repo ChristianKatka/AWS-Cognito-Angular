@@ -15,6 +15,21 @@ export const initialState: NoteState = {
 
 const noteReducer = createReducer(
   initialState,
+
+  on(NoteActions.GetNotes.success, (state, { notes }) => {
+    const notesMap = notes.reduce(
+      (items: { [id: string]: Note }, item: Note) => ({
+        ...items,
+        [item.id]: item,
+      }),
+      {}
+    );
+    return {
+      ...state,
+      notes: notesMap,
+    };
+  }),
+
   on(NoteActions.CreateNote.initiate, (state) => {
     return {
       ...state,
@@ -28,7 +43,6 @@ const noteReducer = createReducer(
         ...note,
       },
     };
-
     return {
       ...state,
       isLoading: false,
@@ -39,6 +53,18 @@ const noteReducer = createReducer(
     return {
       ...state,
       isLoading: false,
+    };
+  }),
+
+  on(NoteActions.DeleteNote.success, (state, { id }) => {
+    const notes = {
+      ...state.notes,
+    };
+    delete notes[id];
+
+    return {
+      ...state,
+      notes,
     };
   }),
 

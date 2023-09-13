@@ -1,23 +1,19 @@
 <main>
   <section class="note" *ngFor="let note of notes">
     <div class="flex-row align-space-between-center">
-      <h2>Otsikko vain</h2>
+      <h2>{{ note.heading }}</h2>
       <button mat-icon-button [matMenuTriggerFor]="menu">
         <mat-icon>more_horiz</mat-icon>
       </button>
       <mat-menu #menu="matMenu">
-        <div mat-menu-item class="flex-row">
+        <div (click)="deleteNote.emit(note.id)" mat-menu-item class="flex-row">
           <mat-icon>delete</mat-icon>
           <span>Delete</span>
         </div>
       </mat-menu>
     </div>
     <p>
-      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ullam pariatur
-      mollitia dicta, tenetur repellendus deserunt vitae voluptatibus! Quos modi
-      exercitationem alias adipisci accusamus temporibus delectus porro fuga
-      obcaecati reiciendis, atque sit commodi magni quidem voluptate, laudantium
-      reprehenderit vero ducimus ad.
+      {{ note.text }}
     </p>
   </section>
 </main>

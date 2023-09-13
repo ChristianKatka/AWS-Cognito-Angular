@@ -8,3 +8,11 @@ h2 {
   border-radius: 8px;
   padding: 1rem;
 }
+
+.note:first-child {
+  margin-top: 2rem;
+}
+
+.note:last-child {
+  margin-bottom: 2rem;
+}

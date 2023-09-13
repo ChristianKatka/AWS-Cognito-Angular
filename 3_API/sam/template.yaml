@@ -98,6 +98,13 @@ Resources:
             Path: $default
             PayloadFormatVersion: "1.0"
             Method: ANY
+        ApiEventOptions: # this is needed for preflight request (cognito authorizer)
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref ApiGatewayHttpApi
+            Path: /{proxy+}
+            PayloadFormatVersion: "1.0"
+            Method: OPTIONS
 
 Outputs:
   ApiEndoint:

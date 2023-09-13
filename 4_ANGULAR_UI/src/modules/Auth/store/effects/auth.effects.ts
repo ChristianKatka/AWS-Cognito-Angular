@@ -85,9 +85,9 @@ export class AuthEffects {
     )
   );
 
-  loginSuccess$ = createEffect(() =>
+  loginOrRefreshTokensSuccess$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(AuthActions.Login.success),
+      ofType(AuthActions.Login.success, AuthActions.RefreshTokens.success),
       map(() =>
         RouterActions.navigate({
           commands: ['/home'],

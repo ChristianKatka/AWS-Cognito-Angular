@@ -8,8 +8,7 @@ export const catchCognitoErrorsIfAny = (response: any): any => {
     });
   }
 
-  // means "Incorrect username or password."
-  // and errorMessage is "Incorrect username or password."
+  // error name NotAuthorizedException errorMessage is "Incorrect username or password."
   // sometimes errormessage Password attempts exceeded, but cognito api still allows call it again, need to figure out
   if (response.error && response.error.name === 'NotAuthorizedException') {
     return AuthActions.Login.error({

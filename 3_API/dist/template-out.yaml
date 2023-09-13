@@ -79,7 +79,7 @@ Resources:
   API:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: s3://krisu-auth-app---api-lambda-bucket/12792598b851df37fd91ff30ccc19a08
+      CodeUri: s3://krisu-auth-app---api-lambda-bucket/af777012446ded81c3fae87e8ce4e45e
       Handler: index.handler
       MemorySize: 256
       Role:
@@ -97,6 +97,14 @@ Resources:
             Path: $default
             PayloadFormatVersion: '1.0'
             Method: ANY
+        ApiEventOptions:
+          Type: HttpApi
+          Properties:
+            ApiId:
+              Ref: ApiGatewayHttpApi
+            Path: /{proxy+}
+            PayloadFormatVersion: '1.0'
+            Method: OPTIONS
 Outputs:
   ApiEndoint:
     Description: API endpoint

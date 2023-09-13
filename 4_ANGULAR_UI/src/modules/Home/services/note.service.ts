@@ -9,9 +9,14 @@ export class NoteService {
   constructor(private authHttp: AuthHTTPService) {}
 
   createNote(noteDraft: NoteDraft): Observable<Note> {
-    return this.authHttp.post(
-      `${environment.apiBaseUrl}/create-post`,
-      noteDraft
-    );
+    return this.authHttp.post(`${environment.apiBaseUrl}/note`, noteDraft);
+  }
+
+  getNotes(): Observable<Note[]> {
+    return this.authHttp.get(`${environment.apiBaseUrl}/note`);
+  }
+
+  deleteNote(id: string): Observable<{ id: string }> {
+    return this.authHttp.delete(`${environment.apiBaseUrl}/note/${id}`);
   }
 }
