@@ -11,7 +11,7 @@ Utilize Angular along with an Auth API to manage user sign-in and sign-up proces
 # Slice of the state that contains tokens, which are both saved and synced in the local storage.
 <img width="1728" alt="tokens state" src="https://github.com/ChristianKatka/AWS-Cognito-Angular/assets/42738047/a2a059e2-f9b0-4306-9fc9-dfea536fac8f">
 
-# Tokens are saved to the localstorage
+# Tokens are saved to the local storage
 <img width="1711" alt="tokens" src="https://github.com/ChristianKatka/AWS-Cognito-Angular/assets/42738047/6caf204b-92fa-4759-9fda-eddd679b9839">
 
 # ngrx localstorage sync helps us achieve this easily
